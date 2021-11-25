@@ -1,5 +1,5 @@
 # Desafio Cross Commerce
-Projeto desenvolvido para desenvolver o desafio Cross Commerce.
+Projeto com o objetivo de desenvolver o desafio Cross Commerce.
 
 ## Ambiente de desenvolvimento
 
