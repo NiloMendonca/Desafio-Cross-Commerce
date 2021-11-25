@@ -44,25 +44,28 @@ def getList(i):
 def partition(x, left, right):
 	pivot = x[left]
 
-	i = left
+	i = left + 1
 	j = right
-	while i <= j:
-		while x[i] <= pivot:
-			i += 1
-			if i == right:
-				break
 
-		while pivot <= x[j]:
-			j -= 1
-			if j == left:
-				break
+	done = False
+	while not done:
+		while i <= j and x[i] <= pivot:
+			i = i + 1
 
-		if i >= j:
-			break
+		while x[j] >= pivot and j >= i:
+			j = j - 1
 
-		x[i], x[j] = x[j], x[i]
+		if j < i:
+			done = True
+		else:
+			temp = x[i]
+			x[i] = x[j]
+			x[j] = temp
 
-	pivot, x[j] = x[j], pivot
+	temp = x[left]
+	x[left] = x[j]
+	x[j] = temp
+
 	return j
 
 def medianOfThree(x, left, right):
