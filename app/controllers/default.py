@@ -9,11 +9,14 @@ from flask_cors import CORS, cross_origin
 CORS(app, support_credentials=True)
 JWTManager(app)
 
-@app.route("/")
-@cross_origin(supports_credentials=True)
-def home():
+listNumbers = []
+
+@app.before_first_request
+def init():
+	print("Init")
+	print("Getting numbers from the API...")
 	i = 1
-	listNumbers = []
+	global listNumbers
 	listNumbers = listNumbers + getList(i)
 	temp = []
 
@@ -25,10 +28,23 @@ def home():
 				listNumbers = listNumbers + temp
 		else:
 			break
-	
-	quicksort(listNumbers, 0, len(listNumbers)-1)	
-		
+			
+	print("Sorting the numbers...")
+	quicksort(listNumbers, 0, len(listNumbers)-1)
+	print("Ready! Data available")
+
+@app.route("/")
+@cross_origin(supports_credentials=True)
+def home():
+	global listNumbers
 	return render_template('home.html', data=listNumbers)
+
+@app.route("/list")
+@cross_origin(supports_credentials=True)
+def list():
+	global listNumbers
+	return listNumbers
+	
 
 def getList(i):
 	response = requests.get('http://challenge.dienekes.com.br/api/numbers?page=' + str(i)).text
