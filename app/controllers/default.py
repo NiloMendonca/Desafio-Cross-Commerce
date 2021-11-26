@@ -28,7 +28,12 @@ def init():
 				listNumbers = listNumbers + temp
 		else:
 			break
-			
+
+		############## Development
+		# if i>50:
+			# break
+		###############################################################################
+
 	print("Sorting the numbers...")
 	quicksort(listNumbers, 0, len(listNumbers)-1)
 	print("Ready! Data available")
@@ -37,13 +42,23 @@ def init():
 @cross_origin(supports_credentials=True)
 def home():
 	global listNumbers
+	page = request.args.get('page')
+	if page:
+		page = int(page)
+		return render_template('home.html', data=listNumbers[page*100-100:page*100])
+
 	return render_template('home.html', data=listNumbers)
 
-@app.route("/list")
+@app.route("/numbers")
 @cross_origin(supports_credentials=True)
 def list():
 	global listNumbers
-	return listNumbers
+	page = request.args.get('page')
+	if page:
+		page = int(page)
+		return {'numbers': listNumbers[page*100-100:page*100]}
+
+	return {'all-numbers':listNumbers}
 	
 
 def getList(i):
