@@ -11,6 +11,7 @@ JWTManager(app)
 
 listNumbers = []
 
+# Funcao executada uma unica vez para carregar e ordenar os numeros
 @app.before_first_request
 def init():
 	print("Init")
@@ -29,15 +30,16 @@ def init():
 		else:
 			break
 
-		############## Development
+		############## Usado apenas para testes no desenvolvimento
 		# if i>50:
 			# break
-		###############################################################################
+		###############################
 
 	print("Sorting the numbers...")
 	quicksort(listNumbers, 0, len(listNumbers)-1)
 	print("Ready! Data available")
 
+# Rota para disponiblizar os numeros para visualizacao no navegador
 @app.route("/")
 @cross_origin(supports_credentials=True)
 def home():
@@ -49,6 +51,7 @@ def home():
 
 	return render_template('home.html', data=listNumbers)
 
+# Rota para disponiblizar os numeros para consumo da API 
 @app.route("/numbers")
 @cross_origin(supports_credentials=True)
 def list():
@@ -60,7 +63,7 @@ def list():
 
 	return {'all-numbers':listNumbers}
 	
-
+# Realiza o Get dos numeros em todas as paginas
 def getList(i):
 	response = requests.get('http://challenge.dienekes.com.br/api/numbers?page=' + str(i)).text
 	json_data = json.loads(response)
@@ -72,6 +75,7 @@ def getList(i):
 
 	return json_data['numbers']
 
+# Funcao separa utilizada pelo algoritmo QuickSort para ordenacao dos numeros
 def partition(x, left, right):
 	pivot = x[left]
 
@@ -99,6 +103,7 @@ def partition(x, left, right):
 
 	return j
 
+# Funcao mediana de 3, utilizada para tornar o algoritmo QuickSort mais eficiente
 def medianOfThree(x, left, right):
     temp = int((left + right)/2)
     if x[right] < x[left]:
@@ -109,11 +114,13 @@ def medianOfThree(x, left, right):
         swap(x, right, temp)
     return temp
 
+# Funcao que realiza a troca da posicao de dois elementos no vetor
 def swap(x, left, right):
     temp = x[left]
     x[left] = x[right]
     x[right] = temp    
 
+# Algoritmo de ordenacao QuickSort
 def quicksort(x, left, right):
 	if left >= right:
 		return

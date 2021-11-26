@@ -71,7 +71,7 @@ Para visualizar os números ordenados por páginas pelo navegador acesse "http:/
 Para retornar todos os números ordenados realize um Get para "http://127.0.0.1:5000/numbers".
 
 - Números ordenados por página:
-Para retornar os números ordenados por páginas realize um Get para "http://127.0.0.1:5000?page=1" (substituir o valor "1" pelo número da página desejada, caso a página seja maior que a quantidade de números disponibilizados será retornado um vetor vazio "[]").
+Para retornar os números ordenados por páginas realize um Get para "http://127.0.0.1:5000/numbers?page=1" (substituir o valor "1" pelo número da página desejada, caso a página seja maior que a quantidade de números disponibilizados será retornado um vetor vazio "[]").
 
 
 ### Testes
