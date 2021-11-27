@@ -4,20 +4,15 @@ sys.path.append("..")
 
 import tempfile
 import pytest
+import random
+import requests
 
 from app.controllers.default import *
 
-# def test_init():
-# 	assert init() == []
-
-# def test_home():
-# 	assert home() == []
-
-# def test_list():
-# 	assert list() == []
-
-# def test_getList():
-# 	assert getList(1) == []
+def test_getList():
+	for t in range(5):
+		n = random.randint(0,20000)
+		assert (type(getList(n)) == type([]) or getList(n) == None)
 
 def test_partition():
 	x = [9,8,7,6,5,4,3,2,1,0]
@@ -61,3 +56,21 @@ def test_quicksort():
 	x = []
 	quicksort(x, 0, len(x)-1)
 	assert x == []
+
+def testRoutes():
+	print("Para passar nesse caso de teste é necessário que a aplicação esteja rodando.")
+	response = requests.get('http://127.0.0.1:5000')
+	assert response.status_code == 200
+
+	response = requests.get('http://127.0.0.1:5000/numbers')
+	assert response.status_code == 200
+
+	for t in range(5):
+		n = random.randint(0,20000)
+		response = requests.get('http://127.0.0.1:5000?page='+ str(n))
+		assert response.status_code == 200
+
+	for t in range(5):
+		n = random.randint(0,20000)
+		response = requests.get('http://127.0.0.1:5000/numbers?page='+ str(n))
+		assert response.status_code == 200

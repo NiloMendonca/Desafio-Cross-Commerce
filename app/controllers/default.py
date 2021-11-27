@@ -31,8 +31,8 @@ def init():
 			break
 
 		############## Usado apenas para testes no desenvolvimento
-		# if i>50:
-			# break
+		# if i>15:
+		# 	break
 		###############################
 
 	print("Sorting the numbers...")
@@ -57,11 +57,14 @@ def home():
 def list():
 	global listNumbers
 	page = request.args.get('page')
-	if page:
-		page = int(page)
-		return {'numbers': listNumbers[page*100-100:page*100]}
+	if len(listNumbers) > 0:
+		if page:
+			page = int(page)
+			return {'numbers': listNumbers[page*100-100:page*100]}
 
-	return {'all-numbers':listNumbers}
+		return {'all-numbers':listNumbers}
+
+	return {'all-numbers':[]}
 	
 # Realiza o Get dos numeros em todas as paginas
 def getList(i):
